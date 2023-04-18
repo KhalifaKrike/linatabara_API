@@ -1,10 +1,13 @@
-#from django.shortcuts import HttpResponse
+from django.shortcuts import HttpResponse
 from donor.models import Wilaya,Daiira,BloodType,Donor
 from rest_framework.decorators import api_view
 from donor.Serializers import WilayaSerializer,BloodTypeSerializer,DonorSerializer,DaiiraSerializer,DonorSerializerPOST
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework import status
+
+
+
 
 @api_view(['GET'])
 def get_wilayate(request):

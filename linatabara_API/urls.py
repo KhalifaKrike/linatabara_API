@@ -20,7 +20,7 @@ from donor import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('', views.welcome)
+    #path('', views.home),
 
     path('wilaya/', views.get_wilayate),
     path('wilaya/<int:wilayaNum>/', views.get_daiira),
