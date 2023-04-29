@@ -44,12 +44,12 @@ class Donor(models.Model):
     blood = models.ForeignKey(BloodType, on_delete=models.SET_NULL,null=True,blank=True)
     wilaya = models.ForeignKey(Wilaya,on_delete=models.SET_NULL,null=True,blank=True)
     daiira = models.ForeignKey(Daiira,on_delete=models.SET_NULL,null=True,blank=True)
-    email = models.EmailField(max_length=120)
+    email = models.EmailField(max_length=120, unique=True)
     password = models.CharField(max_length=128,blank=False)
     n_tel = models.CharField(max_length=10,blank=False)
 
     def __str__(self):
-        return str(self.wilaya).replace('-','') + ' |  type =' + str(self.blood)
+        return str(self.wilaya).replace('-','') + ' |  type =' + str(self.blood) + 'id = '+str(self.id)
     
     def save(self, *args, **kwargs):
         if self.wilaya:

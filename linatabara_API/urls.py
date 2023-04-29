@@ -27,6 +27,8 @@ urlpatterns = [
     path('bloodTypes/', views.get_blood_types),
     path('donors/', views.donor),
     path('donors/<int:bloodtype>/<int:wilaya>/<int:daiira>/', views.search_donor),
-    path('donors/<int:bloodtype>/<int:wilaya>/', views.search_donor_using_bloodType_and_wilaya)
-    
+    path('donors/<int:bloodtype>/<int:wilaya>/', views.search_donor_using_bloodType_and_wilaya),
+    path('donors/<int:donor_id>/', views.delete_update_donor)
+
+
 ]

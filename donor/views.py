@@ -32,9 +32,10 @@ def get_blood_types(request):
 def donor(request):
     if request.method == 'POST':
         serializer = DonorSerializerPOST(data=request.data)
+        print(request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, tatus=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         raise ValidationError('wrong data')
     
     elif request.method == 'GET':
@@ -71,4 +72,28 @@ def search_donor_using_bloodType_and_wilaya(request,bloodtype,wilaya):
         return Response({'message': 'No data available.'}, status=status.HTTP_204_NO_CONTENT)
     
     return Response(serializeData.data,status=status.HTTP_200_OK)
-    
+
+
+@api_view(['DELETE','PUT'])
+def delete_update_donor(request, donor_id):
+    if request.method == 'DELETE':
+        try:
+            donor = Donor.objects.get(id=donor_id)
+        except Donor.DoesNotExist:
+            return Response({'message': 'Donor not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        donor.delete()
+        return Response({'message': 'Donor successfully deleted.'}, status=status.HTTP_204_NO_CONTENT)
+    elif request.method == 'PUT':    
+        try:
+            donor = Donor.objects.get(id=donor_id)
+        except Donor.DoesNotExist:
+            return Response({'message': 'Donor not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = DonorSerializerPOST(instance=donor, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
