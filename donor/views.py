@@ -47,6 +47,16 @@ def donor(request):
 
 
 @api_view(['GET'])
+def get_one_donor(request,id):
+    donor = Donor.objects.get(id=id)
+    serializeData = DonorSerializer(donor)
+    if not serializeData.data:
+        return Response({'message': 'No data available.'}, status=status.HTTP_204_NO_CONTENT)
+    return Response(serializeData.data,status=status.HTTP_200_OK)
+
+
+
+@api_view(['GET'])
 def search_donor(request,bloodtype,wilaya,daiira):
     
     if Wilaya.objects.get(number=wilaya).name != Daiira.objects.get(number=daiira).name:
