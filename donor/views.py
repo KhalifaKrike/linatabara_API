@@ -46,15 +46,6 @@ def donor(request):
         return Response(serializeData.data,status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
-def get_one_donor(request,id):
-    donor = Donor.objects.get(id=id)
-    serializeData = DonorSerializer(donor)
-    if not serializeData.data:
-        return Response({'message': 'No data available.'}, status=status.HTTP_204_NO_CONTENT)
-    return Response(serializeData.data,status=status.HTTP_200_OK)
-
-
 
 @api_view(['GET'])
 def search_donor(request,bloodtype,wilaya,daiira):
@@ -84,7 +75,7 @@ def search_donor_using_bloodType_and_wilaya(request,bloodtype,wilaya):
     return Response(serializeData.data,status=status.HTTP_200_OK)
 
 
-@api_view(['DELETE','PUT'])
+@api_view(['DELETE','PUT','GET'])
 def delete_update_donor(request, donor_id):
     if request.method == 'DELETE':
         try:
@@ -106,4 +97,11 @@ def delete_update_donor(request, donor_id):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'GET': 
+        donor = Donor.objects.get(id=donor_id)
+        serializeData = DonorSerializer(donor)
+        if not serializeData.data:
+            return Response({'message': 'No data available.'}, status=status.HTTP_204_NO_CONTENT)
+        return Response(serializeData.data,status=status.HTTP_200_OK)
+
 
