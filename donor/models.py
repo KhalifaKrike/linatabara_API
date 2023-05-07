@@ -62,6 +62,9 @@ class Donor(models.Model):
     age = models.IntegerField(default=18,null=False)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES,default=1)
     status = models.CharField(max_length=7, choices=STATS_CHOICES, default='enable')
+    birthdate = models.DateField(default=timezone.now)
+    call_time = models.CharField(max_length=128,blank=True)
+
 
     def __str__(self):
         return str(self.wilaya).replace('-','') + ' |  type =' + str(self.blood) + 'id = '+str(self.id)

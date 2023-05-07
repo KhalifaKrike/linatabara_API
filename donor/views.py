@@ -77,7 +77,7 @@ def search_donor_using_bloodType_and_wilaya(request,bloodtype,wilaya):
 
 @api_view(['DELETE','PUT','GET'])
 def delete_update_donor(request, donor_id):
-    if request.method == 'DELETE':
+    if request.method == 'DELETE':#######
         try:
             donor = Donor.objects.get(id=donor_id)
         except Donor.DoesNotExist:
@@ -85,19 +85,19 @@ def delete_update_donor(request, donor_id):
 
         donor.delete()
         return Response({'message': 'Donor successfully deleted.'}, status=status.HTTP_204_NO_CONTENT)
-    elif request.method == 'PUT':    
+    elif request.method == 'PUT':#######    
         try:
             donor = Donor.objects.get(id=donor_id)
         except Donor.DoesNotExist:
             return Response({'message': 'Donor not found.'}, status=status.HTTP_404_NOT_FOUND)
-
+        ##hna  request.data
         serializer = DonorSerializerPOST(instance=donor, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'GET': 
+    elif request.method == 'GET':####### 
         donor = Donor.objects.get(id=donor_id)
         serializeData = DonorSerializer(donor)
         if not serializeData.data:

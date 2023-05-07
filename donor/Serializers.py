@@ -19,10 +19,13 @@ class DonorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Donor
         fields = '__all__'
+
+
 class DonorSerializerPOST(serializers.ModelSerializer):
     class Meta:
         model = Donor
         fields = '__all__'
+
 
 class WilayaSerializer(serializers.ModelSerializer):
     class Meta:
