@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 '''
 print(donor.get_blood_type_display())  # Output: "A+"
@@ -35,6 +36,15 @@ class Daiira(models.Model):
 
 
 class Donor(models.Model):
+    GENDER_CHOICES = [
+        ('M', 'Male'),
+        ('F', 'Female'),
+    ]
+
+    STATS_CHOICES = [
+        ('enable', 'Enable'),
+        ('disable', 'Disable'),
+    ]
     #BLOOD_CHOICES = [(type.type, type.type) for type in BloodType.objects.all()]
     #WILAYA_CHOICES = [(wilaya.number, wilaya.name) for wilaya in Wilaya.objects.all()]
     #blood = models.CharField(max_length=3, choices=BLOOD_CHOICES)
@@ -47,6 +57,11 @@ class Donor(models.Model):
     email = models.EmailField(max_length=120, unique=True)
     password = models.CharField(max_length=128,blank=False)
     n_tel = models.CharField(max_length=10,blank=False, unique=True)
+    ##
+    date_signup = models.DateTimeField(default=timezone.now)
+    age = models.IntegerField(default=18,null=False)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES,default=1)
+    status = models.CharField(max_length=7, choices=STATS_CHOICES, default='enable')
 
     def __str__(self):
         return str(self.wilaya).replace('-','') + ' |  type =' + str(self.blood) + 'id = '+str(self.id)
